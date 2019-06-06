@@ -2,7 +2,7 @@ var express = require("express");
 
 var app = express();
 
-var PORT = process.env.PORT || 8080;
+var port = process.env.PORT || 8080;
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
@@ -22,13 +22,18 @@ var connection = mysql.createConnection({
   database: "burgers_db"
 });
 
-connection.connect(function(err) {
-    if (err) {
-      console.error("error connecting: " + err.stack);
-      return;
-    }
-  
-    console.log("connected as id " + connection.threadId);
-  });
+connection.connect(function (err) {
+  if (err) {
+    console.error("error connecting: " + err.stack);
+    return;
+  }
 
-  
+  console.log("connected as id " + connection.threadId);
+});
+
+var routes = require('./controllers/burgers_controller.js');
+
+
+app.listen(port);
+
+module.exports = app;

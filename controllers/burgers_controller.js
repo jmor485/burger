@@ -1,36 +1,36 @@
 var express = require('express');
-var router = express.Router();
+var routes = require('express').Router();
+var server = require('../server.js');
+var Burger = require('../models/burger.js');
 
-var burger = require('../models/burger.js');
+var port = process.env.PORT || 8080;
 
-router.get('/', function(req, res) {
-  burger.selectAll(function(data) {
-    var hbsObject = {
-      burgers: data
+routes.get('/', function (req, res) {
+  Burger.selectAll(function (data) {
+    var allBurgers = {
+      burgersdata
     };
-    
-    res.render('index', hbsObject);
   });
+  res.render("index", allBurgers);
 });
 
-router.post('/burgers', function(req, res) {
-  burger.insertOne([
-    'burger_name'
-  ], [
-    req.body.burger_name
-  ], function(data) {
+// router/post
+routes.post("burgers", function (req, res) {
+  Burger.addOne([
+    "burger_name"
+  ], [req.body.parse.burger_name])
+});
+
+// router/put
+routes.put("burgers/:id", function (req, res) {
+  var add = "id: " + req.params.id;
+})
+Burger.updateDevoured({
+  devoured: true
+},
+  function (data) {
     res.redirect('/');
   });
-});
 
-router.put('/burgers/:id', function(req, res) {
-  var condition = 'id = ' + req.params.id;
 
-  burger.updateOne({
-    devoured: true
-  }, condition, function(data) {
-    res.redirect('/');
-  });
-});
-
-module.exports = router;
+module.exports = routes;
