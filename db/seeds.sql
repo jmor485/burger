@@ -1,4 +1,4 @@
-INSERT INTO burgers (burger_name) VALUES ('The All American');
-INSERT INTO burgers (burger_name) VALUES ('The Whopper');
-INSERT INTO burgers (burger_name) VALUES ('The Big Mac');
-INSERT INTO burgers (burger_name) VALUES ('The Baconator');
+INSERT INTO BURGERS (burger_name, devoured) VALUES ('The All American', FALSE);
+INSERT INTO BURGERS (burger_name, devoured) VALUES ('The Whopper', FALSE);
+INSERT INTO BURGERS (burger_name, devoured) VALUES ('The Big Mac', FALSE);
+INSERT INTO BURGERS (burger_name, devoured) VALUES ('The Baconator', FALSE);
