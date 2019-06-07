@@ -1,10 +1,13 @@
 <nav class="navbar bg-dark">
-    <img src="/assets/img/burger.png" height="80" class="d-inline-block align-top mx-auto" alt="">
 </nav>
+
+{{!-- <div><img src="/assets/img/burger.png" height="300" alt=""></div> --}}
+
 <div class="container my-5">
     <div class="row">
+        <img src="/assets/img/burger.png" height="300" alt="">
         <div class="col">
-            {{> uneaten-burger }}
+            {{> uneaten-burgers }}
         </div>
         <div class="col">
             {{> burger-list }}
@@ -13,7 +16,8 @@
     <div class="row mt-5">
         <div class="col-md-6 offset-md-3">
             <div class="input-group mb-3">
-                <input type="text" class="form-control" placeholder="Burger Name" aria-label="Burger Name" id="burgerName">
+                <input type="text" class="form-control" placeholder="Burger Name" aria-label="Burger Name"
+                    id="burgerName">
                 <div class="input-group-append">
                     <button class="btn btn-outline-success" type="button" id="addBurger">Add</button>
                 </div>

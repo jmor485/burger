@@ -1,8 +1,7 @@
 var express = require("express");
-
+var connection = require("./config/connection");
 var app = express();
-
-var port = process.env.PORT || 8080;
+var PORT = process.env.PORT || 8080;
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
@@ -31,9 +30,10 @@ connection.connect(function (err) {
   console.log("connected as id " + connection.threadId);
 });
 
-var routes = require('./controllers/burgers_controller.js');
+app.use(express.static(__dirname + '/public'));
+app.use('/', require('./controllers/burgers_controller.js'));
 
 
-app.listen(port);
+app.listen(PORT);
 
 module.exports = app;

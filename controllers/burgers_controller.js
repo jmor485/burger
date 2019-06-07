@@ -3,34 +3,49 @@ var routes = require('express').Router();
 var server = require('../server.js');
 var Burger = require('../models/burger.js');
 
-var port = process.env.PORT || 8080;
+var PORT = process.env.PORT || 8080;
 
-routes.get('/', function (req, res) {
-  Burger.selectAll(function (data) {
-    var allBurgers = {
-      burgersdata
-    };
+routes.get("/", function (req, res) {
+  Burger.selectBurgers().then(result => {
+    // Populate results based on devoured status
+    let devoured = result.filter(b => b.devoured === 1);
+    let undevoured = result.filter(b => b.devoured === 0);
+    res.render("index", {
+      undevouredList: undevoured,
+      devouredList: devoured
+    });
+  }).catch((err) => {
+    res.status(500).send({ error: err });
   });
-  res.render("index", allBurgers);
 });
 
-// router/post
-routes.post("burgers", function (req, res) {
-  Burger.addOne([
-    "burger_name"
-  ], [req.body.parse.burger_name])
+routes.get("/api/burger", (req, res) => {
+  Burger.selectBurgers().then((err, result) => {
+    res.send(result);
+  }).catch((err) => {
+    res.status(500).send({ error: err });
+  });
 });
 
-// router/put
-routes.put("burgers/:id", function (req, res) {
-  var add = "id: " + req.params.id;
-})
-Burger.updateDevoured({
-  devoured: true
-},
-  function (data) {
-    res.redirect('/');
+routes.post("/api/burger", (req, res) => {
+  if (!req.body.name) {
+    res.status(500).send({ error: "Burger name is required" });
+  }
+  let newBurger = new Burger(req.body.name);
+  Burger.create(newBurger).then(id => {
+    res.json(id);
+  }).catch((err) => {
+    res.status(500).send({ error: err });
   });
+});
+
+routes.put("/api/burger/:id", (req, res) => {
+  Burger.updateDevoured(req.params.id).then(result => {
+    res.json(result);
+  }).catch((err) => {
+    res.status(500).send({ error: err });
+  });
+});
 
 
 module.exports = routes;
