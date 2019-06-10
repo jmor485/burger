@@ -6,7 +6,7 @@ const app = {
             success: function () {
                 window.location.reload();
             }
-        })
+        });
     },
 
     burgerActions: function () {
