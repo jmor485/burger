@@ -7,7 +7,6 @@ var PORT = process.env.PORT || 8080;
 
 routes.get("/", function (req, res) {
   Burger.selectBurgers().then(result => {
-    // Populate results based on devoured status
     let devoured = result.filter(b => b.devoured === 1);
     let undevoured = result.filter(b => b.devoured === 0);
     res.render("index", {
