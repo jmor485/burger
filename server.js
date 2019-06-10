@@ -28,6 +28,7 @@ connection.connect(function (err) {
   }
 
   console.log("connected as id " + connection.threadId);
+  console.log("Server listening on: http://localhost:" + PORT);
 });
 
 app.use(express.static(__dirname + '/public'));
